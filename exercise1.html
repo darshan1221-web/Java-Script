@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Exercise 1</h1>
+    <p>
+        <a onclick="return confirmname();" href="name.html">Click Here To See Name</a>
+    </p>
+    <script>
+        function confirmname(){
+            var response = confirm ("Are You Ready To See My Name ?");
+            if(response==true){
+                alert("It's Here");
+                return true;
+            }
+            else{
+
+                alert("Ok Fine As Your Wish");
+                return false;
+            }
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Select Your Language</h1>
+    <h3>Gujarati, Hindi, Tamil, Marathi, Punjabi</h3>
+    <button id="acceptBtn" type="button">Accept Language</button>
+    <script>
+        document.getElementById("acceptBtn").onclick = function() {
+            var lang = prompt("Enter your language (Gujarati, Hindi, Tamil, Marathi, Punjabi):");
+            if (!lang) return;
+            lang = lang.trim().toLowerCase();
+            var messages = {
+                gujarati: "તમારું સ્વાગત છે!",
+                hindi: "आपका स्वागत है!",
+                tamil: "உங்களை வரவேற்கிறோம்!",
+                marathi: "तुमचे स्वागत आहे!",
+                punjabi: "ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ!"
+            };
+            var msg = messages[lang];
+            if (msg) {
+                alert(msg);
+            } else {
+                alert("Language not recognized. Please enter one of: Gujarati, Hindi, Tamil, Marathi, Punjabi.");
+            }
+        }
+    </script>
+</body>
+</html>
