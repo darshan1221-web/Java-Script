@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SIP Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #0b1220; color: #e5e7eb; }
+    .card { background: #0f172a; border-radius: 1rem; border: 1px solid #1f2937; }
+    .form-label { color: #cbd5e1; }
+    .form-control, .form-select, .input-group-text {
+      background: #0c1326; color: #e5e7eb; border-color: #1f2937;
+    }
+    .form-control:focus {
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 0.25rem rgba(245,158,11,0.15);
+    }
+    .card-header { background: linear-gradient(135deg, #111827, #0b1220); }
+    .stat { background: #0c1326; border-radius: .75rem; padding: 1rem; }
+    .accent { color: #f59e0b; }
+    .muted { color: #9ca3af; }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow-lg">
+          <div class="card-header p-4 text-light">
+            <h4 class="mb-0">SIP Calculator</h4>
+          </div>
+          <div class="card-body p-4">
+            <form>
+              <!-- Monthly Investment -->
+              <div class="mb-4">
+                <label for="monthlyInvestment" class="form-label">Monthly Investment</label>
+                <div class="input-group">
+                  <span class="input-group-text">₹</span>
+                  <input type="number" class="form-control" id="monthlyInvestment" placeholder="5000">
+                </div>
+                <div id="investment_error"></div>
+              </div>
+
+              <!-- Expected Annual Return -->
+              <div class="mb-4">
+                <label for="annualReturn" class="form-label">Expected Annual Return (%)</label>
+                <input type="number" step="0.01" class="form-control" id="annualReturn" placeholder="12">
+                <div id="return_error"></div>
+              </div>
+
+              <!-- Investment Tenure -->
+              <div class="mb-4">
+                <label for="sipTenure" class="form-label">Investment Tenure (Years)</label>
+                <input type="number" min="1" class="form-control" id="sipTenure" placeholder="10">
+                <div id="tenure_error"></div>
+              </div>
+
+              <!-- Buttons -->
+              <button type="button" onclick="CalculateSIP()" class="btn btn-warning">Calculate</button>
+              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            </form>
+                 
+            <!-- Results Section -->
+            <hr class="my-4 border-secondary">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="stat">
+                  <div class="muted">Invested Amount</div>
+                  <div class="h4 fw-bold accent" id="investedAmount">₹ —</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="stat">
+                  <div class="muted">Estimated Returns</div>
+                  <div class="h4 fw-bold" id="estimatedReturns">₹ —</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="stat">
+                  <div class="muted">Total Value</div>
+                  <div class="h4 fw-bold" id="totalValue">₹ —</div>
+                </div>
+              </div>
+            </div>
+            <p class="muted mt-3">Note: Estimated returns are based on assumed growth rate and may vary.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+function CalculateSIP()  {
+  let P = document.getElementById('monthlyInvestment').value;
+  let annualRate = document.getElementById('annualReturn').value;
+  let years = document.getElementById('sipTenure').value;
+  console.log(monthlyInvestment,annualReturn,sipTenure);
+  let  valid = true;
+  document.getElementById('investment_error').innerHTML = '';
+  document.getElementById('return_error').innerHTML = '';
+  document.getElementById('tenure_error').innerHTML = '';
+
+  if (P === '') {
+    document.getElementById('investment_error').innerHTML = 'Enter monthly investment';
+    document.getElementById('investment_error').className = 'text-danger';
+     valid = false;
+  }
+  if (annualRate === '') {
+    document.getElementById('return_error').innerHTML = 'Enter annual return rate';
+    document.getElementById('return_error').className = 'text-danger';
+     valid = false;
+  }
+  if (years === '') {
+    document.getElementById('tenure_error').innerHTML = 'Enter tenure';
+    document.getElementById('tenure_error').className = 'text-danger';
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  P = parseFloat(P);
+  annualRate = parseFloat(annualRate) / 12 / 100; // monthly rate
+  let n = parseInt(years) * 12; // total months
+
+  // SIP Formula
+  let FV = P * ((Math.pow(1 + annualRate, n) - 1) / annualRate) * (1 + annualRate);
+  let investedAmount = P * n;
+  let estimatedReturns = FV - investedAmount;
+
+  document.getElementById('investedAmount').innerHTML = `₹ ${investedAmount.toFixed(2)}`;
+  document.getElementById('estimatedReturns').innerHTML = `₹ ${estimatedReturns.toFixed(2)}`;
+  document.getElementById('totalValue').innerHTML = `₹ ${FV.toFixed(2)}`;
+ 
+};
+
+</script>
+
+</body>
+</html>
