@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe Layout</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 5px;
+      background: #444;
+      padding: 5px;
+      border-radius: 10px;
+    }
+    .cell {
+      background: #222;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2.5rem;
+      color: #ffd700;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .cell:hover {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="board">
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <button class="reset-button" style="grid-column: span 3; margin-top: 10px; padding: 10px; font-size: 1rem; cursor: pointer;">
+        Reset Game
+    </button>
+  </div>
+  <script>
+  const cells = document.querySelectorAll('.cell');
+  const resetButton = document.querySelector('.reset-button');
+
+  let currentPlayer = 'X';
+  let board = Array(9).fill('');
+
+  const winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+
+  cells.forEach((cell, index) => {
+    cell.addEventListener('click', () => {
+      if (board[index] === '' && !checkWinner()) {
+        board[index] = currentPlayer;
+        cell.textContent = currentPlayer;
+        if (checkWinner()) {
+          setTimeout(() => {
+            alert(currentPlayer + ' wins!');
+            resetGame();
+          }, 500); // Delay for visual effect
+        } else if (board.every(cell => cell !== '')) {
+          setTimeout(() => {
+            alert('It\'s a draw!');
+            resetGame();
+          }, 500);
+        } else {
+          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+      }
+    });
+  });
+
+  function checkWinner() {
+    return winningCombinations.some(combination => {
+      return combination.every(index => board[index] === currentPlayer);
+    });
+  }
+
+  function resetGame() {
+    board.fill('');
+    cells.forEach(cell => cell.textContent = '');
+    currentPlayer = 'X';
+  }
+
+  resetButton.addEventListener('click', resetGame);
+</script>
+
+  </body>
+</html>
