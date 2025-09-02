@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Object using 1st Method</h1>
+    <script>
+        var MyMath = {
+            num1:10,
+            num2:30,
+            add: function(){
+                let Result = this.num1 + this.num2;
+                console.log("Addition is: " + Result);
+            },
+            display: function(){
+                console.log("Num1 is: " + this.num1);
+                console.log("Num2 is: " + this.num2);
+            },
+            sub: function(){
+                let Result = this.num1 - this.num2;
+                console.log("Subtraction is: " + Result);
+            },
+            mul: function(){
+                let Result = this.num1 * this.num2;
+                console.log("Multiplication is: " + Result);
+            },
+            div: function(){
+                let Result = this.num1 / this.num2;
+                console.log("Division is: " + Result);
+            }   
+        };
+        MyMath.add();
+        MyMath.display();
+        MyMath.sub();
+        MyMath.mul();
+        MyMath.div();
+
+    </script>
+</body>
+</html>
